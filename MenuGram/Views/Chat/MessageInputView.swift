@@ -12,7 +12,7 @@ struct MessageInputView: View {
     @Namespace private var ns
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 4) {
             Group {
                 if isRecording {
                     recordingIndicator
@@ -29,7 +29,6 @@ struct MessageInputView: View {
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(.quaternary)
                         )
-                        .glassEffect(in: .rect(cornerRadius: 12))
                         .matchedGeometryEffect(id: "bar", in: ns)
                 }
             }
@@ -39,7 +38,7 @@ struct MessageInputView: View {
                 Button {
                     startRecording()
                 } label: {
-                    Image(systemName: "mic.fill")
+                    Image(systemName: "waveform")
                         .font(.title2)
                         .foregroundStyle(.blue)
                         .frame(width: 28, height: 28)
@@ -117,9 +116,7 @@ struct MessageInputView: View {
 
             Spacer()
 
-            Text("Recording...")
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
+            ShimmerText("Recording...", color: .secondary, font: .system(size: 10, weight: .medium, design: .monospaced), duration: 2.5)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)

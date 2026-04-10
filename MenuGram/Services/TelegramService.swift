@@ -370,6 +370,36 @@ final class TelegramService {
         }
     }
 
+    func sendPhoto(chatId: Int64, filePath: String, caption: String = "") async {
+        guard let client else { return }
+        do {
+            let formattedCaption = caption.isEmpty ? nil : FormattedText(entities: [], text: caption)
+            let content = InputMessageContent.inputMessagePhoto(
+                InputMessagePhoto(
+                    addedStickerFileIds: [],
+                    caption: formattedCaption,
+                    hasSpoiler: false,
+                    height: 0,
+                    photo: .inputFileLocal(InputFileLocal(path: filePath)),
+                    selfDestructType: nil,
+                    showCaptionAboveMedia: false,
+                    thumbnail: nil,
+                    width: 0
+                )
+            )
+            _ = try await client.sendMessage(
+                chatId: chatId,
+                inputMessageContent: content,
+                options: nil,
+                replyMarkup: nil,
+                replyTo: nil,
+                topicId: nil
+            )
+        } catch {
+            errorMessage = "Failed to send photo: \(error.localizedDescription)"
+        }
+    }
+
     func sendMessage(chatId: Int64, text: String) async {
         guard let client else { return }
         do {

@@ -18,9 +18,13 @@ struct MessageBubbleView: View {
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(message.isOutgoing ? Color.blue.opacity(0.2) : Color.secondary.opacity(0.1))
+                    .foregroundStyle(
+                        message.isOutgoing ?
+                        LinearGradient(colors: [.cyan.opacity(0.7), .blue.opacity(0.7)], startPoint: .top, endPoint: .bottom) : LinearGradient(colors: [Color.gray.opacity(0.5)], startPoint: .top, endPoint: .bottom)
+                        )
             )
-            .glassEffect(in: .rect(cornerRadius: 16))
+            .foregroundStyle(message.isOutgoing ? Color.white : Color.primary)
+            
 
             if !message.isOutgoing { Spacer(minLength: 48) }
         }
